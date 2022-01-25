@@ -1,0 +1,1390 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2. Data Preparation and processing &#8212; Anthony Van Roost - Car price prediction - Predictive analytics (UCLL)</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3. Exploration" href="cars_predictive_analysis_project-Copy5.html" />
+    <link rel="prev" title="1. Reading and taking a look at the data" href="cars_predictive_analysis_project-Copy2.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Anthony Van Roost - Car price prediction - Predictive analytics (UCLL)</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="cars_predictive_analysis_project-Copy2.html">
+   1. Reading and taking a look at the data
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   2. Data Preparation and processing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cars_predictive_analysis_project-Copy5.html">
+   3. Exploration
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cars_predictive_analysis_project-Copy6.html">
+   4. Machine learning fundamental methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cars_predictive_analysis_project-Copy7.html">
+   5. Neural Network
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/cars_predictive_analysis_project-Copy3.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcars_predictive_analysis_project-Copy3.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/cars_predictive_analysis_project-Copy3.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#missing-values">
+   2.1. Missing values
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#removing-duplicates">
+   2.2 Removing duplicates
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#anomalies-and-outliers">
+   2.3 Anomalies and outliers
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#one-hot-encoding">
+   2.4. One-hot encoding
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>2. Data Preparation and processing</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#missing-values">
+   2.1. Missing values
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#removing-duplicates">
+   2.2 Removing duplicates
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#anomalies-and-outliers">
+   2.3 Anomalies and outliers
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#one-hot-encoding">
+   2.4. One-hot encoding
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="data-preparation-and-processing">
+<h1>2. Data Preparation and processing<a class="headerlink" href="#data-preparation-and-processing" title="Permalink to this headline">¶</a></h1>
+<p><strong>Now we can prepare the data for analysis.</strong></p>
+<p><strong>First of all, Column ‘Unnamed: 0’ seems useless. Let’s drop that column.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="missing-values">
+<h2>2.1. Missing values<a class="headerlink" href="#missing-values" title="Permalink to this headline">¶</a></h2>
+<p><strong>Now we can calculate the percentage of empty values per feature.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model            0.00
+year             0.00
+price            0.00
+transmission     0.00
+mileage         10.05
+fuelType         0.99
+tax              4.97
+mpg              0.00
+engineSize      19.98
+make             0.00
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>‘fuelType’ is a column with string values. It is hard to choose something to fill in for these empty values
+and guessing could pollute our dataset. Furthermore it only has 0.99% missing values.
+Therefore we can safely delete these empty rows.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;fuelType&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>I chose KNN imputation to fill in the empty values for the other features,
+as this is generally a better way to predict empty values than mean or median imputation.
+To do this I temporarily removed the textual columns to be able to run the KNNImputer Algorithm</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_num</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;transmission&#39;</span><span class="p">,</span><span class="s1">&#39;model&#39;</span><span class="p">,</span><span class="s1">&#39;fuelType&#39;</span><span class="p">,</span><span class="s1">&#39;make&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Next, I created the KNNimputer and used it to fill in the ‘engineSize’, ‘mileage’ and ‘tax’ columns.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">KNNImputer</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">imputer</span> <span class="o">=</span> <span class="n">KNNImputer</span><span class="p">()</span>
+<span class="n">df_imputed</span> <span class="o">=</span> <span class="n">imputer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_num</span><span class="p">)</span>  <span class="c1"># impute all the missing data</span>
+<span class="n">df_temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df_imputed</span><span class="p">)</span>
+<span class="n">df_temp</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df_num</span><span class="o">.</span><span class="n">columns</span>
+
+<span class="c1"># Return to the original dataframe with textual fields included and update only the desired columns</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;engineSize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_temp</span><span class="p">[</span><span class="s1">&#39;engineSize&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;mileage&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_temp</span><span class="p">[</span><span class="s1">&#39;mileage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;tax&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_temp</span><span class="p">[</span><span class="s1">&#39;tax&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Let’s check:</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model           0.0
+year            0.0
+price           0.0
+transmission    0.0
+mileage         0.0
+fuelType        0.0
+tax             0.0
+mpg             0.0
+engineSize      0.0
+make            0.0
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Great, no more missing values.</strong></p>
+</div>
+<div class="section" id="removing-duplicates">
+<h2>2.2 Removing duplicates<a class="headerlink" href="#removing-duplicates" title="Permalink to this headline">¶</a></h2>
+<p><strong>Next step is to drop duplicates if there are any.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>year</th>
+      <th>price</th>
+      <th>transmission</th>
+      <th>mileage</th>
+      <th>fuelType</th>
+      <th>tax</th>
+      <th>mpg</th>
+      <th>engineSize</th>
+      <th>make</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A1</td>
+      <td>2017</td>
+      <td>12500</td>
+      <td>Manual</td>
+      <td>23925.4</td>
+      <td>Petrol</td>
+      <td>150.0</td>
+      <td>55.4</td>
+      <td>1.40</td>
+      <td>audi</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>A6</td>
+      <td>2016</td>
+      <td>16500</td>
+      <td>Automatic</td>
+      <td>36203.0</td>
+      <td>Diesel</td>
+      <td>30.0</td>
+      <td>64.2</td>
+      <td>2.00</td>
+      <td>audi</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>A1</td>
+      <td>2016</td>
+      <td>11000</td>
+      <td>Manual</td>
+      <td>29946.0</td>
+      <td>Petrol</td>
+      <td>30.0</td>
+      <td>55.4</td>
+      <td>1.40</td>
+      <td>audi</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>A4</td>
+      <td>2017</td>
+      <td>16800</td>
+      <td>Automatic</td>
+      <td>25952.0</td>
+      <td>Diesel</td>
+      <td>145.0</td>
+      <td>67.3</td>
+      <td>1.70</td>
+      <td>audi</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>A3</td>
+      <td>2019</td>
+      <td>17300</td>
+      <td>Manual</td>
+      <td>1998.0</td>
+      <td>Petrol</td>
+      <td>145.0</td>
+      <td>49.6</td>
+      <td>1.00</td>
+      <td>audi</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>85550</th>
+      <td>Eos</td>
+      <td>2012</td>
+      <td>5990</td>
+      <td>Manual</td>
+      <td>74000.0</td>
+      <td>Diesel</td>
+      <td>125.0</td>
+      <td>58.9</td>
+      <td>2.00</td>
+      <td>vw</td>
+    </tr>
+    <tr>
+      <th>85551</th>
+      <td>Fox</td>
+      <td>2008</td>
+      <td>1799</td>
+      <td>Manual</td>
+      <td>88102.0</td>
+      <td>Petrol</td>
+      <td>145.0</td>
+      <td>46.3</td>
+      <td>1.78</td>
+      <td>vw</td>
+    </tr>
+    <tr>
+      <th>85552</th>
+      <td>Fox</td>
+      <td>2009</td>
+      <td>1590</td>
+      <td>Manual</td>
+      <td>70000.0</td>
+      <td>Petrol</td>
+      <td>189.0</td>
+      <td>42.0</td>
+      <td>1.40</td>
+      <td>vw</td>
+    </tr>
+    <tr>
+      <th>85553</th>
+      <td>Fox</td>
+      <td>2006</td>
+      <td>1250</td>
+      <td>Manual</td>
+      <td>82704.0</td>
+      <td>Petrol</td>
+      <td>150.0</td>
+      <td>46.3</td>
+      <td>1.20</td>
+      <td>vw</td>
+    </tr>
+    <tr>
+      <th>85554</th>
+      <td>Fox</td>
+      <td>2007</td>
+      <td>2295</td>
+      <td>Manual</td>
+      <td>74000.0</td>
+      <td>Petrol</td>
+      <td>145.0</td>
+      <td>46.3</td>
+      <td>1.20</td>
+      <td>vw</td>
+    </tr>
+  </tbody>
+</table>
+<p>83923 rows × 10 columns</p>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="anomalies-and-outliers">
+<h2>2.3 Anomalies and outliers<a class="headerlink" href="#anomalies-and-outliers" title="Permalink to this headline">¶</a></h2>
+<p><strong>Now let’s look for anomalies and outliers. They have to be removed, as they can impact the quality of the prediction.</strong></p>
+<p><strong>A simple yet effective way to check for anomalies is to use a boxplot to visuale the data.
+Some possible outliers are listed below.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/cars_predictive_analysis_project-Copy3_20_0.png" src="_images/cars_predictive_analysis_project-Copy3_20_0.png" />
+</div>
+</div>
+<p><strong>A car from 2060 is ofcourse not possible, it must be an error so it can safely be removed.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2060</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Now let’s look at the outlier at the bottom of the boxplot.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1980</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>year</th>
+      <th>price</th>
+      <th>transmission</th>
+      <th>mileage</th>
+      <th>fuelType</th>
+      <th>tax</th>
+      <th>mpg</th>
+      <th>engineSize</th>
+      <th>make</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>56346</th>
+      <td>M Class</td>
+      <td>1970</td>
+      <td>24999</td>
+      <td>Automatic</td>
+      <td>14000.0</td>
+      <td>Diesel</td>
+      <td>305.0</td>
+      <td>39.2</td>
+      <td>0.0</td>
+      <td>merc</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>The first mercedes M class was made in 1997, so 1970 is not a possible year. Let’s remove this row as well.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1970</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;mpg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/cars_predictive_analysis_project-Copy3_27_0.png" src="_images/cars_predictive_analysis_project-Copy3_27_0.png" />
+</div>
+</div>
+<p><strong>Some outliers at the top of the ‘mpg’ boxplot, let’s check.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;mpg&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">400</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>year</th>
+      <th>price</th>
+      <th>transmission</th>
+      <th>mileage</th>
+      <th>fuelType</th>
+      <th>tax</th>
+      <th>mpg</th>
+      <th>engineSize</th>
+      <th>make</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10700</th>
+      <td>i3</td>
+      <td>2016</td>
+      <td>17100</td>
+      <td>Automatic</td>
+      <td>25269.0</td>
+      <td>Other</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.60</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>11289</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>19998</td>
+      <td>Automatic</td>
+      <td>41949.0</td>
+      <td>Hybrid</td>
+      <td>140.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>11446</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>19998</td>
+      <td>Automatic</td>
+      <td>27591.2</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>11448</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>21898</td>
+      <td>Automatic</td>
+      <td>10839.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>1.32</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>12534</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>19980</td>
+      <td>Automatic</td>
+      <td>26965.0</td>
+      <td>Hybrid</td>
+      <td>140.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>13020</th>
+      <td>i3</td>
+      <td>2016</td>
+      <td>19490</td>
+      <td>Automatic</td>
+      <td>8421.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>13945</th>
+      <td>i3</td>
+      <td>2016</td>
+      <td>16482</td>
+      <td>Automatic</td>
+      <td>43695.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>14296</th>
+      <td>i3</td>
+      <td>2015</td>
+      <td>14285</td>
+      <td>Automatic</td>
+      <td>65800.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>14581</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>18500</td>
+      <td>Automatic</td>
+      <td>36429.0</td>
+      <td>Hybrid</td>
+      <td>116.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>14768</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>19495</td>
+      <td>Automatic</td>
+      <td>17338.0</td>
+      <td>Hybrid</td>
+      <td>88.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>14777</th>
+      <td>i3</td>
+      <td>2015</td>
+      <td>17481</td>
+      <td>Automatic</td>
+      <td>9886.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>1.54</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>14879</th>
+      <td>i3</td>
+      <td>2015</td>
+      <td>15498</td>
+      <td>Automatic</td>
+      <td>33931.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>15417</th>
+      <td>i3</td>
+      <td>2014</td>
+      <td>15450</td>
+      <td>Automatic</td>
+      <td>42479.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>15534</th>
+      <td>i3</td>
+      <td>2014</td>
+      <td>14495</td>
+      <td>Automatic</td>
+      <td>34539.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>15844</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>21444</td>
+      <td>Automatic</td>
+      <td>16389.4</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>16170</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>18995</td>
+      <td>Automatic</td>
+      <td>33021.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>16288</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>21490</td>
+      <td>Automatic</td>
+      <td>26139.0</td>
+      <td>Hybrid</td>
+      <td>135.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>16413</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>19000</td>
+      <td>Automatic</td>
+      <td>23983.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>16458</th>
+      <td>i3</td>
+      <td>2014</td>
+      <td>14182</td>
+      <td>Automatic</td>
+      <td>37161.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>16514</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>21500</td>
+      <td>Automatic</td>
+      <td>10900.0</td>
+      <td>Hybrid</td>
+      <td>140.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>16738</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>23751</td>
+      <td>Automatic</td>
+      <td>28169.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>1.90</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>16948</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>22999</td>
+      <td>Automatic</td>
+      <td>3976.0</td>
+      <td>Hybrid</td>
+      <td>135.0</td>
+      <td>470.8</td>
+      <td>1.76</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>17482</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>21494</td>
+      <td>Automatic</td>
+      <td>16867.0</td>
+      <td>Hybrid</td>
+      <td>135.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>17542</th>
+      <td>i3</td>
+      <td>2016</td>
+      <td>15990</td>
+      <td>Automatic</td>
+      <td>68000.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>17544</th>
+      <td>i3</td>
+      <td>2016</td>
+      <td>14900</td>
+      <td>Automatic</td>
+      <td>59945.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>1.98</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>17629</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>20495</td>
+      <td>Automatic</td>
+      <td>19368.2</td>
+      <td>Hybrid</td>
+      <td>135.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>17715</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>19948</td>
+      <td>Automatic</td>
+      <td>27591.2</td>
+      <td>Hybrid</td>
+      <td>135.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>17752</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>22495</td>
+      <td>Automatic</td>
+      <td>22420.4</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>17922</th>
+      <td>i3</td>
+      <td>2016</td>
+      <td>19875</td>
+      <td>Automatic</td>
+      <td>20013.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>17967</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>21495</td>
+      <td>Automatic</td>
+      <td>24041.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>18015</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>19895</td>
+      <td>Automatic</td>
+      <td>29851.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>18464</th>
+      <td>i3</td>
+      <td>2016</td>
+      <td>19850</td>
+      <td>Automatic</td>
+      <td>27591.2</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>18856</th>
+      <td>i3</td>
+      <td>2015</td>
+      <td>14940</td>
+      <td>Automatic</td>
+      <td>59000.0</td>
+      <td>Other</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.60</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>19043</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>18999</td>
+      <td>Automatic</td>
+      <td>20321.0</td>
+      <td>Electric</td>
+      <td>135.0</td>
+      <td>470.8</td>
+      <td>1.88</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>19068</th>
+      <td>i3</td>
+      <td>2016</td>
+      <td>18999</td>
+      <td>Automatic</td>
+      <td>9990.0</td>
+      <td>Electric</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>19288</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>19300</td>
+      <td>Automatic</td>
+      <td>32867.0</td>
+      <td>Other</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.60</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>19503</th>
+      <td>i3</td>
+      <td>2015</td>
+      <td>17400</td>
+      <td>Automatic</td>
+      <td>32421.4</td>
+      <td>Electric</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>1.44</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>19927</th>
+      <td>i3</td>
+      <td>2015</td>
+      <td>12500</td>
+      <td>Automatic</td>
+      <td>79830.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.00</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>20592</th>
+      <td>i3</td>
+      <td>2016</td>
+      <td>16500</td>
+      <td>Automatic</td>
+      <td>35446.0</td>
+      <td>Hybrid</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>1.88</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>20748</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>20000</td>
+      <td>Automatic</td>
+      <td>19178.0</td>
+      <td>Other</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.60</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>20754</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>19500</td>
+      <td>Automatic</td>
+      <td>23956.0</td>
+      <td>Other</td>
+      <td>135.0</td>
+      <td>470.8</td>
+      <td>0.60</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>20993</th>
+      <td>i3</td>
+      <td>2016</td>
+      <td>17000</td>
+      <td>Automatic</td>
+      <td>41063.0</td>
+      <td>Other</td>
+      <td>0.0</td>
+      <td>470.8</td>
+      <td>0.60</td>
+      <td>bmw</td>
+    </tr>
+    <tr>
+      <th>21198</th>
+      <td>i3</td>
+      <td>2017</td>
+      <td>17600</td>
+      <td>Automatic</td>
+      <td>24854.6</td>
+      <td>Other</td>
+      <td>135.0</td>
+      <td>470.8</td>
+      <td>0.60</td>
+      <td>bmw</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>It looks like these are all BMW i3 cars. The reason for these high mpg values might be the fact that these vehicles are very small and run mainly on electricity, so they don’t use a lot of petrol. I chose not to remove these rows as they might contain valuable information, but we have to keep these outliers in mind in further processing.</strong></p>
+</div>
+<div class="section" id="one-hot-encoding">
+<h2>2.4. One-hot encoding<a class="headerlink" href="#one-hot-encoding" title="Permalink to this headline">¶</a></h2>
+<p><strong>I tried one-hot encoding to convert class variables into binary ones to be able to involve them into predidictive algorithms, but found out they mostly had a negative impact on prediction quality, hence the fact that they are commented out (not used).</strong></p>
+<p><strong>Of course I could have optimized for this by using other techniques to improve the quality of encoding, but I just chose not to use these features in predictions. Because time is limited and nothing is perfect. ;)</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;transmission&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Manual&#39; &#39;Automatic&#39; &#39;Semi-Auto&#39; &#39;Other&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#transmission = df.pop(&#39;transmission&#39;)</span>
+<span class="c1">#df[&#39;automatic&#39;] = (transmission == &#39;Automatic&#39;)*1.0</span>
+<span class="c1">#df[&#39;semi-auto&#39;] = (transmission == &#39;Semi-Auto&#39;)*1.0</span>
+<span class="c1">#df[&#39;manual&#39;] = (transmission == &#39;Manual&#39;)*1.0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;fuelType&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Petrol&#39; &#39;Diesel&#39; &#39;Hybrid&#39; &#39;Other&#39; &#39;Electric&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#fueltype = df.pop(&#39;fuelType&#39;)</span>
+<span class="c1">#df[&#39;petrol&#39;] = (fueltype == &#39;Petrol&#39;)*1.0</span>
+<span class="c1">#df[&#39;diesel&#39;] = (fueltype == &#39;Diesel&#39;)*1.0</span>
+<span class="c1">#df[&#39;hybrid&#39;] = (fueltype == &#39;Hybrid&#39;)*1.0</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="cars_predictive_analysis_project-Copy2.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">1. Reading and taking a look at the data</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="cars_predictive_analysis_project-Copy5.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">3. Exploration</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Anthony Van Roost<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
